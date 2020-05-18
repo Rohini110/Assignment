@@ -1,0 +1,5 @@
+(defparameter *names* '(abhishek 'nidhish 'mohit 'manjeet))
+(defun list-test(names)
+    (format t "3nd Item in the List = ~a ~%" (nth 2 names))
+) 
+(list-test *names*)

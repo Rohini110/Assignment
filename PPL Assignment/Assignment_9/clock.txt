@@ -1,0 +1,42 @@
+#include <stdio.h> 
+#include<stdlib.h>
+#include<unistd.h>
+#include <time.h> 
+#include<pthread.h>
+
+time_t sec;                        
+struct tm* curr_time;         
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER; 
+
+void *functionName1(void *vargp){
+    pthread_mutex_lock(&mutex); 
+    printf("Inside thread 1 : Time in seconds\n");
+    sec = time(NULL);         
+    pthread_mutex_unlock(&mutex); 
+}
+
+void *functionName2(void *vargp){
+    printf("Inside thread 2 : Time in seconds is calculated in hours, min and sec \n\n");
+    pthread_mutex_lock(&mutex); 
+    curr_time = localtime(&sec);   		 
+    printf("Current Time is - %02d:%02d:%02d\n\n", curr_time->tm_hour, curr_time->tm_min, curr_time->tm_sec);
+    pthread_mutex_unlock(&mutex);
+}
+
+
+int main(){
+
+	pthread_t thread_id1, thread_id2;
+	printf("Inside Main before thread\n\n");
+	
+	pthread_create(&(thread_id1), NULL, functionName1, NULL);
+	pthread_create(&(thread_id2), NULL, functionName2, NULL);
+	
+	pthread_join(thread_id1, NULL);
+	pthread_join(thread_id2, NULL);
+	
+	printf("Inside Main after thread\n\n");
+	return 0;
+}
+
+  

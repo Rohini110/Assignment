@@ -1,0 +1,15 @@
+(defun element(n)
+	(nth n (list 1 2 3 4 5)))
+
+(defun fact(n)
+	(if( = n 1) 
+		1
+	(* n (fact(- n 1)))))
+
+(defun factorial (n)
+	(defun iter (product counter)
+		(if (> counter n)
+			product
+			(iter (* counter product) (+ counter 1))
+))
+(iter 1 1 ))
